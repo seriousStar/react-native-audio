@@ -230,7 +230,8 @@ RCT_EXPORT_METHOD(prepareRecordingAtPath:(NSString *)path sampleRate:(float)samp
       [_recordSession setCategory:AVAudioSessionCategoryRecord error:nil];
       [_recordSession setMode:AVAudioSessionModeMeasurement error:nil];
   }else{
-      [_recordSession setCategory:AVAudioSessionCategoryMultiRoute error:nil];
+//      [_recordSession setCategory:AVAudioSessionCategoryMultiRoute error:nil];
+      [_recordSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
   }
 
   _audioRecorder = [[AVAudioRecorder alloc]
