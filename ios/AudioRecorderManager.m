@@ -231,7 +231,13 @@ RCT_EXPORT_METHOD(prepareRecordingAtPath:(NSString *)path sampleRate:(float)samp
       [_recordSession setMode:AVAudioSessionModeMeasurement error:nil];
   }else{
 //      [_recordSession setCategory:AVAudioSessionCategoryMultiRoute error:nil];
-      [_recordSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+      if (@available(iOS 10.0, *)) {
+          [_recordSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetoothA2DP error:nil];
+      } else {
+          // Fallback on earlier versions
+          [_recordSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+      }
+      
   }
 
   _audioRecorder = [[AVAudioRecorder alloc]
